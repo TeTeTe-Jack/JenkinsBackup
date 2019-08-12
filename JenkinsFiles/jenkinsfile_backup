@@ -51,7 +51,7 @@ pipeline {
         sh "./script/unmount.sh -xe $shareJenkinsDir"
       }
     }
-  }
+  }		
   
   post{
     
