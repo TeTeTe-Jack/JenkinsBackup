@@ -3,7 +3,7 @@
 pipeline {
   
   agent{
-    label 'master'
+    label "master"
   }
   
   paramters{
@@ -34,7 +34,7 @@ pipeline {
       }
     }
   
-    stage('Mount Backup Server'){
+    stage('Mount Backup Server')
       steps{
         sh "./script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password"
       }
