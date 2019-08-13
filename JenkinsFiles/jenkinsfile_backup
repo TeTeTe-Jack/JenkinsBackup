@@ -60,7 +60,7 @@ pipeline {
     }
       
     success{
-      slackSend channel: '$slackChannel', color: 'good', message: 'Job Success ${JOB_NAME}”
+      slackSend channel: '$slackChannel', color: 'good', message: 'Job Success ${JOB_NAME}'
     }
     
     failure{
@@ -68,7 +68,7 @@ pipeline {
     }
     
     aborted{
-      slackSend channel: '$slackChannel', color: 'warning', message: 'Job Aborted ${JOB_NAME}”
+      slackSend channel: '$slackChannel', color: 'warning', message: 'Job Aborted ${JOB_NAME}'
     }  
   }
 }
