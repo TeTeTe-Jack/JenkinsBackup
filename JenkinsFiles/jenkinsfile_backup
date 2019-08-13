@@ -7,13 +7,12 @@ pipeline{
   }
   
   parameters{
-    string name 'slackChannel'
-    string name 'jenkins_homeDir'
-    string name 'shareJenkinsDir'
-    string name 'shareBackupDir'
-    string name 'backupServer'
-    string name 'password'
-    
+    string(name 'slackChannel',defaultValue: 'None', description: '')
+    string(name 'jenkins_homeDir',defaultValue: 'None', description: '')
+    string(name 'shareJenkinsDir',defaultValue: 'None', description: '')
+    string(name 'shareBackupDir',defaultValue: 'None', description: '')
+    string(name 'backupServer',defaultValue: 'None', description: '')
+    string(name 'password',defaultValue: 'None', description: '')
   }
   
   stages{
