@@ -7,18 +7,18 @@ pipeline {
   }
   
   paramters{
-    string name 'slackChannel'
-    string name 'jenkins_homeDir'
-    string name 'shareJenkinsDir'
-    string name 'shareBackupDir'
-    string name 'backupServer'
-    string name 'password'
+    string name "slackChannel"
+    string name "jenkins_homeDir"
+    string name "shareJenkinsDir"
+    string name "shareBackupDir"
+    string name "backupServer"
+    string name "password"
     
   }
   
   stages{
     
-    stage('check parameters'){
+    stage("check parameters"){
       steps{
         sh "./script/checkParameter.sh -xe $slackChannel"
         sh "./script/checkParameter.sh -xe $jenkins_homeDir"
@@ -28,25 +28,25 @@ pipeline {
       }
     }
   
-    stage('Notify slack to start backup job') {
+    stage("Notify slack to start backup job") {
       steps{
         slackSend channel: "$slackChannel", color: "good", message: "Job start ${env.job_name}"
       }
     }
   
-    stage('Mount Backup Server')
+    stage("Mount Backup Server")
       steps{
         sh "./script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password"
       }
     }
   
-    stage('Make backup file on Backup Server'){
+    stage("Make backup file on Backup Server"){
       steps{
         sh "./script/makeBackup.sh -xe $jenkins_homeDir $shareJenkinsDir"
       }
     }
     
-    stage('Unmount'){
+    stage("Unmount"){
       steps{
         sh "./script/unmount.sh -xe $shareJenkinsDir"
       }
