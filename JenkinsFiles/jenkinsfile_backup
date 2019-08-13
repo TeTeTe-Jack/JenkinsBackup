@@ -56,19 +56,19 @@ pipeline {
   post{
     
     always{
-      slackSend channel: "$slackChannel", color: "good", message: "Job Finish ${env.job_name}
+      slackSend channel: "$slackChannel", color: "good", message: "Job Finish ${JOB_NAME}
     }
       
     success{
-      slackSend channel: "$slackChannel", color: "good", message: "Job Success ${env.job_name}
+      slackSend channel: "$slackChannel", color: "good", message: "Job Success ${JOB_NAME}
     }
     
     failure{
-      slackSend channel: "$slackChannel", color: "danger", message: "Job Failure ${env.job_name}
+      slackSend channel: "$slackChannel", color: "danger", message: "Job Failure ${JOB_NAME}
     }
     
     aborted{
-      slackSend channel: "$slackChannel", color: "warning", message: "Job Aborted ${env.job_name}
+      slackSend channel: "$slackChannel", color: "warning", message: "Job Aborted ${JOB_NAME}
     }  
   }
 }
