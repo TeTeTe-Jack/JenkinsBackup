@@ -30,7 +30,7 @@ pipeline {
   
     stage("Notify slack to start backup job") {
       steps{
-        slackSend channel: "$slackChannel", color: "good", message: "Job start ${env.job_name}"
+        slackSend channel: "$slackChannel", color: "good", message: "Job start ${env.JOB_NAME}"
       }
     }
   
