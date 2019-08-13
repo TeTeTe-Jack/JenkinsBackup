@@ -3,52 +3,52 @@
 pipeline {
   
   agent{
-    label ‘master‘
+    label 'master'
   }
   
   paramters{
-    string name ‘slackChannel‘
-    string name ‘jenkins_homeDir‘
-    string name ‘shareJenkinsDir‘
-    string name ‘shareBackupDir‘
-    string name ‘backupServer‘
-    string name ‘password‘
+    string name 'slackChannel'
+    string name 'jenkins_homeDir'
+    string name 'shareJenkinsDir'
+    string name 'shareBackupDir'
+    string name 'backupServer'
+    string name 'password'
     
   }
   
   stages{
     
-    stage(‘check parameters‘){
+    stage('check parameters'){
       steps{
-        sh ‘./script/checkParameter.sh -xe $slackChannel‘
-        sh ‘./script/checkParameter.sh -xe $jenkins_homeDir‘
-        sh ‘./script/checkParameter.sh -xe $shareJenkinsDir‘
-        sh ‘./script/checkParameter.sh -xe $shareBackupDir‘
-        sh ‘./script/checkParameter.sh -xe $backupServer‘
+        sh './script/checkParameter.sh -xe $slackChannel'
+        sh './script/checkParameter.sh -xe $jenkins_homeDir'
+        sh './script/checkParameter.sh -xe $shareJenkinsDir'
+        sh './script/checkParameter.sh -xe $shareBackupDir'
+        sh './script/checkParameter.sh -xe $backupServer'
       }
     }
   
-    stage(‘Notify slack to start backup job‘) {
+    stage('Notify slack to start backup job') {
       steps{
-        slackSend channel: ‘$slackChannel‘, color: ‘good‘, message: ‘Job start ${JOB_NAME}‘
+        slackSend channel: '$slackChannel', color: 'good', message: 'Job start ${JOB_NAME}'
       }
     }
   
-    stage(‘Mount Backup Server‘)
+    stage('Mount Backup Server')
       steps{
-        sh ‘./script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password‘
+        sh './script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password'
       }
     }
   
-    stage(‘Make backup file on Backup Server‘){
+    stage('Make backup file on Backup Server'){
       steps{
-        sh ‘./script/makeBackup.sh -xe $jenkins_homeDir $shareJenkinsDir‘
+        sh './script/makeBackup.sh -xe $jenkins_homeDir $shareJenkinsDir'
       }
     }
     
-    stage(‘Unmount‘){
+    stage('Unmount'){
       steps{
-        sh ‘./script/unmount.sh -xe $shareJenkinsDir‘
+        sh './script/unmount.sh -xe $shareJenkinsDir'
       }
     }
   }		
@@ -56,19 +56,19 @@ pipeline {
   post{
     
     always{
-      slackSend channel: ‘$slackChannel‘, color: ‘good‘, message: ‘Job Finish ${JOB_NAME}‘
+      slackSend channel: '$slackChannel', color: 'good', message: 'Job Finish ${JOB_NAME}'
     }
       
     success{
-      slackSend channel: ‘$slackChannel‘, color: ‘good‘, message: ‘Job Success ${JOB_NAME}”
+      slackSend channel: '$slackChannel', color: 'good', message: 'Job Success ${JOB_NAME}”
     }
     
     failure{
-      slackSend channel: ‘$slackChannel‘, color: ‘danger‘, message: ‘Job Failure ${JOB_NAME}‘
+      slackSend channel: '$slackChannel', color: 'danger', message: 'Job Failure ${JOB_NAME}'
     }
     
     aborted{
-      slackSend channel: ‘$slackChannel‘, color: ‘warning‘, message: ‘Job Aborted ${JOB_NAME}”
+      slackSend channel: '$slackChannel', color: 'warning', message: 'Job Aborted ${JOB_NAME}”
     }  
   }
 }
