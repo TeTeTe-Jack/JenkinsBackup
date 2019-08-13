@@ -6,7 +6,7 @@ pipeline{
     label 'master'
   }
   
-  paramters{
+  parameters{
     string name 'slackChannel'
     string name 'jenkins_homeDir'
     string name 'shareJenkinsDir'
