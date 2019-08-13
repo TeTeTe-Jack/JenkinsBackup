@@ -28,13 +28,13 @@ pipeline{
       }
     }
   
-    stage('Notify slack to start backup job') {
+    stage('Notify slack to start backup job'){
       steps{
         slackSend channel: '$slackChannel', color: 'good', message: 'Job start ${JOB_NAME}'
       }
     }
   
-    stage('Mount Backup Server')
+    stage('Mount Backup Server'){
       steps{
         sh './script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password'
       }
