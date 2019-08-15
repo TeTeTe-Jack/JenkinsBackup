@@ -13,7 +13,7 @@ if test $# -gt 1 ;then
 fi
 
 # check none
-if $1 = 'none' ;then
+if test $1 = 'none' ;then
   echo "arg is none" 1>&2
   exit 3
 fi
