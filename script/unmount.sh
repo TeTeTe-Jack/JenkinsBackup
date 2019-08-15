@@ -6,7 +6,7 @@
 args=1
 
 # check number of args
-if [$# -ne $args]:then
+if [$# -ne $args];then
   echo "number of args=$#" 1>&2
   echo "number of args should be $args" 1>&2
   exit 1
@@ -20,7 +20,7 @@ umount $Dir
 
 # check unmount
 mountpoint -q $cliantDir
-if [$?=0]:then
+if [$?=0];then
   echo "mount failed" 1>&2
   exit 2
 fi

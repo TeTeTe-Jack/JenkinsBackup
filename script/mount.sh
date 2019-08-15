@@ -6,7 +6,7 @@
 args=4
 
 # check number of args
-if [$# -ne $args]:then
+if [$# -ne $args];then
   echo "number of args=$#" 1>&2
   echo "number of args should be $args" 1>&2
   exit 1
@@ -23,7 +23,7 @@ mount -t cifs //$ipaddr/$serverDir $cliantDir -o pass=$password
 
 # mount check
 mountpoint -q $cliantDir
-if [$?=1]:then
+if [$?=1];then
   echo "mount failed" 1>&2
   exit 2
 fi

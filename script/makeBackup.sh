@@ -6,7 +6,7 @@
 args=2
 
 # check number of args
-if [$# -ne $args]:then
+if [$# -ne $args];then
   echo "number of args=$#" 1>&2
   echo "number of args should be $args" 1>&2
   exit 1
@@ -21,7 +21,7 @@ today=$(date "+%Y%m%d")
 tar -czvf $backupDir/$today"_jenkins_home.tar.gz" $tarDir
 
 # backup check
-if [ ! -e $backupDir/$today"_jenkins_home.tar.gz" ]:then
+if [ ! -e $backupDir/$today"_jenkins_home.tar.gz" ];then
   echo "backup failed" 1>&2
   exit 2
 fi
