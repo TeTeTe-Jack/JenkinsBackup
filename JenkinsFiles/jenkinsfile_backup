@@ -24,7 +24,7 @@ pipeline{
   
     stage('Notify slack to start backup job'){
       steps{
-        slackSend channel: $slackChannel, color: 'good', message: 'Job start ${JOB_NAME}'
+        slackSend channel: "$slackChannel", color: "good", message: "Job start ${JOB_NAME}"
       }
     }
     
@@ -44,19 +44,19 @@ pipeline{
   post{
     
     always{
-      slackSend channel: '$slackChannel', color: 'good', message: 'Job Finish ${JOB_NAME}'
+      slackSend channel: "$slackChannel", color: "good", message: "Job Finish ${JOB_NAME}"
     }
       
     success{
-      slackSend channel: '$slackChannel', color: 'good', message: 'Job Success ${JOB_NAME}'
+      slackSend channel: "$slackChannel", color: 'good', message: "Job Success ${JOB_NAME}"
     }
     
     failure{
-      slackSend channel: '$slackChannel', color: 'danger', message: 'Job Failure ${JOB_NAME}'
+      slackSend channel: "$slackChannel", color: "danger", message: "Job Failure ${JOB_NAME}"
     }
     
     aborted{
-      slackSend channel: '$slackChannel', color: 'warning', message: 'Job Aborted ${JOB_NAME}'
+      slackSend channel: "$slackChannel", color: "warning", message: "Job Aborted ${JOB_NAME}"
     }
     
   }
