@@ -7,23 +7,18 @@ pipeline{
   }
   
   parameters{
-    string(name: 'slackChannel',defaultValue: 'None', description: '')
-    string(name: 'jenkins_homeDir',defaultValue: 'None', description: '')
-    string(name: 'shareJenkinsDir',defaultValue: 'None', description: '')
-    string(name: 'shareBackupDir',defaultValue: 'None', description: '')
-    string(name: 'backupServer',defaultValue: 'None', description: '')
-    string(name: 'password',defaultValue: 'None', description: '')
+    string(name: 'slackChannel',defaultValue: 'backup', description: '')
+    string(name: 'backupSourcePath',defaultValue: '$JENKINS_HOME', description: '')
+    string(name: 'backupDestinationPath',defaultValue: '/tmp/jenkinsbackup/', description: '')
   }
   
   stages{
     
-    stage('check parameters'){
+    stage('Check parameters'){
       steps{
         sh './script/checkParameter.sh -xe $slackChannel'
-        sh './script/checkParameter.sh -xe $jenkins_homeDir'
-        sh './script/checkParameter.sh -xe $shareJenkinsDir'
-        sh './script/checkParameter.sh -xe $shareBackupDir'
-        sh './script/checkParameter.sh -xe $backupServer'
+        sh './script/checkParameter.sh -xe $backupSourcePath'
+        sh './script/checkParameter.sh -xe $backupDestinationPath'
       }
     }
   
@@ -32,22 +27,16 @@ pipeline{
         slackSend channel: '$slackChannel', color: 'good', message: 'Job start ${JOB_NAME}'
       }
     }
-  
-    stage('Mount Backup Server'){
+    
+    stage('Create backup file'){
       steps{
-        sh './script/mount.sh -xe $backupServer $shareBackupDir $shareJenkinsDir $password'
-      }
-    }
-  
-    stage('Make backup file on Backup Server'){
-      steps{
-        sh './script/makeBackup.sh -xe $jenkins_homeDir $shareJenkinsDir'
+        sh './script/makeBackup.sh -xe $backupSourcePath $backupDestinationPath'
       }
     }
     
-    stage('Unmount'){
+    stage('Delete previous backup file'){
       steps{
-        sh './script/unmount.sh -xe $shareJenkinsDir'
+        sh './script/deleteBackup.sh -xe $backupDestinationPath'
       }
     }
   }
