@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # set parameters
-sourcePath=$0
-destinatoionPath=$1
+sourcePath=$1
+destinatoionPath=$2
 today=$(date "+%Y%m%d")
 
 echo $sourcePath
