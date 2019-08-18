@@ -1,9 +1,12 @@
 #!/bin/bash
 
 # set parameters
-sourcePath=$1
-destinatoionPath=$2
+sourcePath=$0
+destinatoionPath=$1
 today=$(date "+%Y%m%d")
+
+echo $sourcePath
+echo $destinationPath
 
 # tar
 tar -czvf $destinatoionPath/$today"_jenkinsbackup.tar.gz" $sourcePath

@@ -30,7 +30,7 @@ pipeline{
     
     stage('Create backup file'){
       steps{
-        sh './script/createBackup.sh -xe $backupSourcePath $backupDestinationPath'
+        sh './script/createBackup.sh $backupSourcePath $backupDestinationPath'
       }
     }
     
