@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # set parameters
-destinatoionPath=$2
+destinatoionPath=$1
 today=$(date "+%Y%m%d")
 
 # delete previous backup files

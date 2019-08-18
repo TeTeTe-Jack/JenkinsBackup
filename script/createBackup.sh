@@ -1,8 +1,8 @@
 #!/bin/bashf
 
 # set parameters
-sourcePath=$2
-destinatoionPath=$3
+sourcePath=$1
+destinatoionPath=$2
 today=$(date "+%Y%m%d")
 
 # tar
