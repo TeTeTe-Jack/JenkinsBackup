@@ -7,7 +7,7 @@ pipeline{
   }
   
   parameters{
-    string(name: 'slackChannel',defaultValue: 'backup', description: '')
+    string(name: 'slackChannel',defaultValue: 'backup-notification', description: '')
     string(name: 'backupSourcePath',defaultValue: '$JENKINS_HOME', description: '')
     string(name: 'backupDestinationPath',defaultValue: '/tmp/jenkinsbackup/', description: '')
   }
