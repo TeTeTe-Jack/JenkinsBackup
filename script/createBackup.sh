@@ -1,4 +1,4 @@
-#!/bin/bashf
+#!/bin/bash
 
 # set parameters
 sourcePath=$1
