@@ -14,17 +14,17 @@ pipeline{
   
   stages{
     
+    stage('Notify slack to start backup job'){
+      steps{
+        slackSend channel: "$slackChannel", color: "good", message: "Job start ${JOB_NAME}"
+      }
+    }
+
     stage('Check parameters'){
       steps{
         sh './script/checkParameter.sh -xe $slackChannel'
         sh './script/checkParameter.sh -xe $backupSourcePath'
         sh './script/checkParameter.sh -xe $backupDestinationPath'
-      }
-    }
-  
-    stage('Notify slack to start backup job'){
-      steps{
-        slackSend channel: "$slackChannel", color: "good", message: "Job start ${JOB_NAME}"
       }
     }
     
