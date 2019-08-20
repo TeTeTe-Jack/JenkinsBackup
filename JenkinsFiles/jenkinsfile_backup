@@ -1,0 +1,63 @@
+#!groovy
+
+pipeline{
+  
+  agent{
+    label 'master'
+  }
+  
+  parameters{
+    string(name: 'slackChannel',defaultValue: 'backup-notification', description: '')
+    string(name: 'backupSourcePath',defaultValue: '$JENKINS_HOME/', description: '')
+    string(name: 'backupDestinationPath',defaultValue: '/tmp/jenkinsbackup/', description: '')
+  }
+  
+  stages{
+    
+    stage('Notify slack to start backup job'){
+      steps{
+        slackSend channel: "$slackChannel", color: "good", message: "Job start ${JOB_NAME}"
+      }
+    }
+
+    stage('Check parameters'){
+      steps{
+        sh './script/checkParameter.sh -xe $slackChannel'
+        sh './script/checkParameter.sh -xe $backupSourcePath'
+        sh './script/checkParameter.sh -xe $backupDestinationPath'
+      }
+    }
+    
+    stage('Create backup file'){
+      steps{
+        sh './script/createBackup.sh $backupSourcePath $backupDestinationPath'
+      }
+    }
+    
+    stage('Delete previous backup file'){
+      steps{
+        sh './script/deleteBackup.sh -xe $backupDestinationPath'
+      }
+    }
+  }
+  
+  post{
+    
+    always{
+      slackSend channel: "$slackChannel", color: "good", message: "Job Finish ${JOB_NAME}"
+    }
+      
+    success{
+      slackSend channel: "$slackChannel", color: 'good', message: "Job Success ${JOB_NAME}"
+    }
+    
+    failure{
+      slackSend channel: "$slackChannel", color: "danger", message: "Job Failure ${JOB_NAME}"
+    }
+    
+    aborted{
+      slackSend channel: "$slackChannel", color: "warning", message: "Job Aborted ${JOB_NAME}"
+    }
+    
+  }
+}
